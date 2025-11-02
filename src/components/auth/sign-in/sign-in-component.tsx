@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -26,11 +25,9 @@ import Link from "next/link";
 import React from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { useRouter } from "next/navigation";
-import { sendOTP } from "@/lib/auth/send-otp";
 
 const SignInComponent = () => {
   const router = useRouter();
-  const [error, setError] = useState<string>("");
 
   const {
     register,
@@ -43,13 +40,7 @@ const SignInComponent = () => {
     },
   });
 
-  const onSubmit = async (data: SignInFormData) => {
-    await sendOTP({
-      email: data.email,
-      setError,
-      router,
-    });
-  };
+  const onSubmit = async (data: SignInFormData) => {};
 
   return (
     <form
@@ -74,11 +65,6 @@ const SignInComponent = () => {
               {errors.email && (
                 <FieldDescription className="text-sm text-red-500 mt-1">
                   {errors.email.message}
-                </FieldDescription>
-              )}
-              {error && (
-                <FieldDescription className="text-sm text-red-500 mt-1">
-                  {error}
                 </FieldDescription>
               )}
             </Field>
