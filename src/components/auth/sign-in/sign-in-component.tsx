@@ -24,8 +24,11 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Spinner } from "@/components/ui/spinner";
+import { useRouter } from "next/navigation";
 
 const SignInComponent = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -37,10 +40,7 @@ const SignInComponent = () => {
     },
   });
 
-  const onSubmit = (data: SignInFormData) => {
-    console.log("✅ Données validées :", data);
-    // ici tu peux envoyer à ton backend ou ton API d'auth
-  };
+  const onSubmit = async (data: SignInFormData) => {};
 
   return (
     <form
@@ -63,12 +63,16 @@ const SignInComponent = () => {
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.email && (
-                <FieldDescription className="text-sm text-white mt-1">
+                <FieldDescription className="text-sm text-red-500 mt-1">
                   {errors.email.message}
                 </FieldDescription>
               )}
             </Field>
-            <Button type="submit" className="flex items-center bg-amber-500 ">
+            <Button
+              type="submit"
+              className="flex items-center bg-amber-500 hover:bg-amber-600"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
                 <Spinner />
               ) : (
@@ -85,22 +89,38 @@ const SignInComponent = () => {
 
         <FieldSet>
           <FieldGroup className="flex flex-col gap-2">
-            <Button type="button" className="flex items-center gap-2">
+            <Button
+              type="button"
+              className="flex items-center gap-2"
+              onClick={() => router.push("/auth/sign-in-phone")}
+            >
               <Phone />
               <span>Se connecter avec un numéro</span>
             </Button>
 
-            <Button type="button" className="flex items-center gap-2">
+            <Button
+              type="button"
+              className="flex items-center gap-2"
+              // onClick={() => handleSocialSignIn("apple")}
+            >
               <Apple />
               <span>Se connecter avec Apple</span>
             </Button>
 
-            <Button type="button" className="flex items-center gap-2">
+            <Button
+              type="button"
+              className="flex items-center gap-2"
+              // onClick={() => handleSocialSignIn("google")}
+            >
               <Google />
               <span>Se connecter avec Google</span>
             </Button>
 
-            <Button type="button" className="flex items-center gap-2">
+            <Button
+              type="button"
+              className="flex items-center gap-2"
+              // onClick={() => handleSocialSignIn("tiktok")}
+            >
               <TiktokCircle />
               <span>Se connecter avec TikTok</span>
             </Button>

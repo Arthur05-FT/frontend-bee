@@ -15,20 +15,35 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 const AccessComponent = () => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <form className="w-full flex justify-center px-10">
+    <form onSubmit={handleSubmit} className="w-full flex justify-center px-10">
       <FieldGroup>
         <FieldSet>
-          <FieldLegend className="text-2xl">
-            Entrez le code de vérification
-          </FieldLegend>
+          <div className="flex items-center gap-2 mb-4">
+            <button
+              type="button"
+              onClick={() => router.push("/auth/sign-in")}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <FieldLegend className="text-2xl">
+              Entrez le code de vérification
+            </FieldLegend>
+          </div>
           <FieldDescription>
-            Nous vous avons envoyez un code de vérification à
-            n********@gmail.com
+            Nous vous avons envoyé un code de vérification à
           </FieldDescription>
           <FieldGroup>
             <Field>
@@ -46,7 +61,13 @@ const AccessComponent = () => {
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
-                <Button className="w-full bg-amber-500">Vérifier</Button>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-amber-500 hover:bg-amber-600"
+                >
+                  Vérifier
+                </Button>
               </div>
             </Field>
           </FieldGroup>
@@ -54,10 +75,10 @@ const AccessComponent = () => {
         <FieldSet>
           <FieldDescription className="flex gap-2 items-center">
             <span>Vous n&apos;avez pas reçu le code?</span>
-            <Link href={"/"}>Renvoyer</Link>
+            <span className="text-gray-400 cursor-not-allowed">Renvoyer</span>
           </FieldDescription>
           <FieldDescription className="flex gap-1.5 items-center">
-            Renvoie de code disponible dans <Countdown seconds={59} />
+            Renvoi de code disponible dans <Countdown seconds={59} />
           </FieldDescription>
         </FieldSet>
       </FieldGroup>
